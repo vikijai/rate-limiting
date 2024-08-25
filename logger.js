@@ -13,10 +13,14 @@ function formatDate(date) {
 
 // Custom function to format time as hh:mm:ss AM/PM
 function formatTime(date) {
-  let hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-  const ampm = hours >= 12 ? "PM" : "AM";
+  // Convert to IST (UTC+5:30)
+  const istOffset = 5 * 60 * 60 * 1000 + 30 * 60 * 1000; // 5 hours 30 minutes in milliseconds
+  const istDate = new Date(date.getTime() + istOffset);
+
+  let hours = istDate.getUTCHours(); // Use UTC hours for accurate offset application
+  const minutes = istDate.getUTCMinutes();
+  const seconds = istDate.getUTCSeconds();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   const formattedHours = hours < 10 ? `0${hours}` : hours;
