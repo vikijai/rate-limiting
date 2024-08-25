@@ -19,7 +19,7 @@ app.use(async (req, res, next) => {
     await appendLogs({ ip, date, url, method, blocked, blockedUntil });
 
     if (blocked) {
-        return res.status(429).send("Too many requests, try again after some time");
+        return res.status(429).send("Too many requests, try again after 60 seconds");
     } else {
         next();
     }
